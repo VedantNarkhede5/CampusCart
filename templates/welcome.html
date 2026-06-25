@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CampusCart</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f5f7fa;
+            overflow-x:hidden;
+        }
+
+        /* Navbar */
+
+        nav{
+            width:100%;
+            height:80px;
+            background:#0b2c57;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:0 8%;
+            position:fixed;
+            top:0;
+            z-index:1000;
+        }
+
+        .logo{
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        .nav-buttons{
+            display:flex;
+            gap:15px;
+        }
+
+        .nav-buttons button{
+            padding:12px 25px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-weight:600;
+            transition:.3s;
+        }
+
+        .login-btn{
+            background:white;
+            color:#0b2c57;
+        }
+
+        .signup-btn{
+            background:#ffb703;
+            color:black;
+        }
+
+        .nav-buttons button:hover{
+            transform:translateY(-2px);
+        }
+
+        /* Hero Section */
+
+        .hero{
+            height:100vh;
+
+            background:
+            linear-gradient(
+            rgba(0,0,0,.55),
+            rgba(0,0,0,.55)),
+            url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            align-items:center;
+            padding-left:10%;
+            color:white;
+        }
+
+        .hero-content{
+            max-width:650px;
+        }
+
+        .hero-content h1{
+            font-size:65px;
+            margin-bottom:20px;
+            animation:slideLeft 1s ease;
+        }
+
+        .hero-content p{
+            font-size:22px;
+            line-height:1.7;
+            margin-bottom:35px;
+            color:#e5e5e5;
+            animation:slideLeft 1.3s ease;
+        }
+
+        .hero-buttons button{
+            padding:15px 35px;
+            border:none;
+            border-radius:5px;
+            margin-right:15px;
+            font-size:16px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .primary{
+            background:#ffb703;
+        }
+
+        .secondary{
+            background:white;
+        }
+
+        .hero-buttons button:hover{
+            transform:translateY(-3px);
+        }
+
+        /* Features */
+
+        .features{
+            margin-top:-80px;
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            flex-wrap:wrap;
+            padding:0 5%;
+            position:relative;
+            z-index:5;
+        }
+
+        .card{
+            background:white;
+            width:280px;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 10px 30px rgba(0,0,0,.1);
+            text-align:center;
+            transition:.4s;
+        }
+
+        .card:hover{
+            transform:translateY(-10px);
+        }
+
+        .card h3{
+            color:#0b2c57;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            color:#666;
+        }
+
+        .stats{
+            padding:100px 10%;
+            display:flex;
+            justify-content:space-around;
+            flex-wrap:wrap;
+            text-align:center;
+        }
+
+        .stat h2{
+            font-size:45px;
+            color:#0b2c57;
+        }
+
+        .stat p{
+            color:#666;
+        }
+
+        @keyframes slideLeft{
+            from{
+                opacity:0;
+                transform:translateX(-60px);
+            }
+            to{
+                opacity:1;
+                transform:translateX(0);
+            }
+        }
+
+        @media(max-width:768px){
+
+            .hero-content h1{
+                font-size:40px;
+            }
+
+            .hero-content p{
+                font-size:18px;
+            }
+
+            nav{
+                padding:0 20px;
+            }
+
+            .nav-buttons button{
+                padding:10px 15px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            CampusCart
+        </div>
+
+        <div class="nav-buttons">
+
+            <a href="/login/">
+                <button class="login-btn">Login</button>
+            </a>
+
+            <a href="/signup/">
+                <button class="signup-btn">Sign Up</button>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Buy & Sell College Items Easily</h1>
+
+            <p>
+                CampusCart is a student marketplace where you can
+                buy, sell and exchange books, electronics,
+                notes, stationery and other college essentials
+                securely within your campus community.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/signup/">
+                    <button class="primary">
+                        Get Started
+                    </button>
+                </a>
+
+                <a href="/signup/">
+                    <button class="primary">
+                        Browse as Guest
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <div class="card">
+            <h3>📚 Academic Materials</h3>
+            <p>
+                Buy and sell textbooks, notes,
+                lab manuals and study resources.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>💻 Electronics</h3>
+            <p>
+                Trade laptops, calculators,
+                headphones and gadgets.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔒 Safe Transactions</h3>
+            <p>
+                Connect with verified students
+                from your college community.
+            </p>
+        </div>
+
+    </section>
+
+    <section class="stats">
+
+        <div class="stat">
+            <h2 id="users">0</h2>
+            <p>Students</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="items">0</h2>
+            <p>Products Listed</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="sales">0</h2>
+            <p>Successful Deals</p>
+        </div>
+
+    </section>
+
+    <script>
+
+        function animateValue(id,end){
+
+            let count=0;
+
+            let speed=Math.ceil(end/100);
+
+            let x=setInterval(function(){
+
+                count+=speed;
+
+                document.getElementById(id).innerText=count+"+";
+
+                if(count>=end){
+
+                    document.getElementById(id).innerText=end+"+";
+
+                    clearInterval(x);
+                }
+
+            },20);
+        }
+
+        window.onload=function(){
+
+            animateValue("users",5000);
+            animateValue("items",12000);
+            animateValue("sales",8000);
+
+        }
+
+    </script>
+
+</body>
+</html>

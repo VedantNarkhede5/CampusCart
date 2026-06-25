@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:25px;
+        }
+
+        /* Header */
+
+        h1:first-of-type{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:20px;
+
+            border-radius:20px 20px 0 0;
+
+            text-align:center;
+        }
+
+        h1:nth-of-type(2){
+
+            background:#0b2c57;
+
+            color:#ffb703;
+
+            text-align:center;
+
+            padding:12px;
+
+            border-radius:0 0 20px 20px;
+
+            margin-bottom:25px;
+        }
+
+        /* Navigation */
+
+        nav{
+
+            background:white;
+
+            padding:18px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#0b2c57;
+
+            font-weight:600;
+
+            margin-right:15px;
+        }
+
+        nav a:hover{
+            color:#ffb703;
+        }
+
+        hr{
+            display:none;
+        }
+
+        /* Decorative Banner */
+
+        body::before{
+
+            content:"🛒 💳 📦 🎓";
+
+            display:block;
+
+            font-size:60px;
+
+            text-align:center;
+
+            margin:20px 0;
+        }
+
+        /* Cart Items */
+
+        p{
+
+            background:white;
+
+            padding:18px;
+
+            margin-bottom:12px;
+
+            border-radius:12px;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.08);
+
+            color:#444;
+
+            font-size:17px;
+
+            transition:.3s;
+        }
+
+        p:hover{
+            transform:translateX(5px);
+        }
+
+        /* Checkout Form */
+
+        form{
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:20px;
+
+            margin-top:25px;
+
+            box-shadow:
+            0 10px 30px rgba(0,0,0,.08);
+        }
+
+        h3{
+
+            color:#0b2c57;
+
+            margin-bottom:20px;
+
+            font-size:24px;
+        }
+
+        /* Payment Options */
+
+        input[type="radio"]{
+
+            transform:scale(1.3);
+
+            margin-right:10px;
+        }
+
+        /* Payment Labels Styling */
+
+        form{
+            font-size:17px;
+            color:#444;
+        }
+
+        /* Place Order Button */
+
+        button{
+
+            margin-top:20px;
+
+            width:100%;
+
+            padding:16px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #16a34a,
+                #15803d
+            );
+
+            color:white;
+
+            font-size:18px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:.3s;
+        }
+
+        button:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+            0 10px 25px rgba(0,0,0,.15);
+        }
+
+        /* Responsive */
+
+        @media(max-width:768px){
+
+            nav{
+                line-height:2;
+            }
+
+            body::before{
+                font-size:40px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Checkout</h1>
+<h1>CampusCart</h1>
+
+<nav>
+    <a href="/home/">Home</a> |
+    <a href="/add-product/">Add Product</a> |
+    <a href="/cart/">Cart</a> |
+    <a href="/my-orders/">My Orders</a> |
+    <a href="/seller-dashboard/">Seller Dashboard</a>
+    <a href="/logout/">Logout</a>
+    <a href="/notifications/">Notifications</a>
+</nav>
+
+<hr>
+
+{% for item in cart_items %}
+
+<p>
+{{ item.product.title }} -
+₹{{ item.product.price }}
+</p>
+
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <h3>Select Payment Method</h3>
+
+    <input
+        type="radio"
+        name="payment_method"
+        value="Cash"
+        checked
+    >
+    Cash on Pickup
+
+    <br><br>
+
+    <input
+        type="radio"
+        name="payment_method"
+        value="UPI"
+    >
+    UPI on Pickup
+
+    <br><br>
+
+    <button type="submit">
+        Place Order
+    </button>
+
+</form>
+<script>
+
+document.querySelectorAll('p').forEach((card,index)=>{
+
+    card.style.opacity='0';
+    card.style.transform='translateY(20px)';
+
+    setTimeout(()=>{
+
+        card.style.transition='0.5s';
+
+        card.style.opacity='1';
+        card.style.transform='translateY(0)';
+
+    },index*120);
+
+});
+
+</script>
+</body>
+</html>

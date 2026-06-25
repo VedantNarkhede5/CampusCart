@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:25px;
+        }
+
+        /* Header */
+
+        h1:first-of-type{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:25px;
+
+            border-radius:20px 20px 0 0;
+
+            text-align:center;
+
+            margin-bottom:0;
+        }
+
+        h1:nth-of-type(2){
+
+            background:#0b2c57;
+
+            color:#ffb703;
+
+            padding:15px;
+
+            text-align:center;
+
+            border-radius:0 0 20px 20px;
+
+            margin-bottom:25px;
+        }
+
+        /* Navigation */
+
+        nav{
+
+            background:white;
+
+            padding:18px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#0b2c57;
+
+            font-weight:600;
+
+            margin-right:15px;
+
+            transition:.3s;
+        }
+
+        nav a:hover{
+            color:#ffb703;
+        }
+
+        hr{
+            display:none;
+        }
+
+        /* Order Cards */
+
+        div[style*="border:1px solid black"]{
+
+            background:white !important;
+
+            border:none !important;
+
+            border-radius:18px;
+
+            padding:25px !important;
+
+            margin:20px 0 !important;
+
+            box-shadow:
+            0 8px 25px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        div[style*="border:1px solid black"]:hover{
+
+            transform:translateY(-5px);
+
+            box-shadow:
+            0 15px 35px rgba(0,0,0,.12);
+        }
+
+        /* Product Title */
+
+        h3{
+
+            color:#0b2c57;
+
+            font-size:24px;
+
+            margin-bottom:15px;
+        }
+
+        /* Details */
+
+        p{
+
+            margin-bottom:10px;
+
+            color:#555;
+
+            line-height:1.6;
+        }
+
+        /* Status Highlight */
+
+        p:first-of-type{
+
+            font-weight:bold;
+        }
+
+        /* Buttons */
+
+        a[href*="complete-order"]{
+
+            display:inline-block;
+
+            background:#16a34a;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-right:10px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="add-review"]{
+
+            display:inline-block;
+
+            background:#2563eb;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-right:10px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="cancel-order"]{
+
+            display:inline-block;
+
+            background:#dc2626;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="complete-order"]:hover,
+        a[href*="add-review"]:hover,
+        a[href*="cancel-order"]:hover{
+
+            transform:translateY(-2px);
+        }
+
+        /* Empty State */
+
+        body > p:last-child{
+
+            background:white;
+
+            padding:25px;
+
+            text-align:center;
+
+            border-radius:15px;
+
+            color:#666;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.06);
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            nav{
+                line-height:2.2;
+            }
+
+            div[style*="border:1px solid black"]{
+                padding:18px !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>My Orders</h1>
+<h1>CampusCart</h1>
+
+<nav>
+    <a href="/home/">Home</a> |
+    <a href="/add-product/">Add Product</a> |
+    <a href="/cart/">Cart</a> |
+    <a href="/my-orders/">My Orders</a> |
+    <a href="/seller-dashboard/">Seller Dashboard</a>
+    <a href="/logout/">Logout</a>
+</nav>
+
+<hr>
+
+{% for order in orders %}
+
+<div style="border:1px solid black;padding:10px;margin:10px;">
+
+    <h3>{{ order.product.title }}</h3>
+
+    <p>Status: {{ order.status }}</p>
+
+    <p>Seller: {{ order.seller.first_name }}</p>
+
+    {% if order.status == "Confirmed" %}
+
+    <p>
+        Seller Phone:
+        {{ order.seller.profile.phone }}
+    </p>
+
+    <p>
+        Seller UPI:
+        {{ order.seller.profile.upi_id }}
+    </p>
+
+    <p>
+        Meeting Location:
+        {{ order.meeting_location }}
+    </p>
+
+    <p>
+        Meeting Time:
+        {{ order.meeting_time }}
+    </p>
+
+    {% endif %}
+
+    {% if order.status == "Confirmed" %}
+
+    <p>
+        Seller Phone:
+        {{ order.seller.profile.phone }}
+    </p>
+
+    <p>
+        Seller UPI:
+        {{ order.seller.profile.upi_id }}
+    </p>
+
+{% endif %}
+
+    {% if order.status == "Confirmed" %}
+
+    <a href="/complete-order/{{ order.id }}/">
+        Mark Received
+    </a>
+
+    <a href="/add-review/{{ order.id }}/">
+        Leave Review
+    </a>
+
+    {% endif %}
+
+    <p>
+        Payment Method:
+        {{ order.payment_method }}
+    </p>
+    {% if order.status == "Pending" %}
+
+    <a href="/cancel-order/{{ order.id }}/">
+        Cancel Order
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% empty %}
+
+<p>No orders yet.</p>
+
+{% endfor %}
+<head>
+    <title>My Orders</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:25px;
+        }
+
+        /* Header */
+
+        h1:first-of-type{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:25px;
+
+            border-radius:20px 20px 0 0;
+
+            text-align:center;
+
+            margin-bottom:0;
+        }
+
+        h1:nth-of-type(2){
+
+            background:#0b2c57;
+
+            color:#ffb703;
+
+            padding:15px;
+
+            text-align:center;
+
+            border-radius:0 0 20px 20px;
+
+            margin-bottom:25px;
+        }
+
+        /* Navigation */
+
+        nav{
+
+            background:white;
+
+            padding:18px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#0b2c57;
+
+            font-weight:600;
+
+            margin-right:15px;
+
+            transition:.3s;
+        }
+
+        nav a:hover{
+            color:#ffb703;
+        }
+
+        hr{
+            display:none;
+        }
+
+        /* Order Cards */
+
+        div[style*="border:1px solid black"]{
+
+            background:white !important;
+
+            border:none !important;
+
+            border-radius:18px;
+
+            padding:25px !important;
+
+            margin:20px 0 !important;
+
+            box-shadow:
+            0 8px 25px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        div[style*="border:1px solid black"]:hover{
+
+            transform:translateY(-5px);
+
+            box-shadow:
+            0 15px 35px rgba(0,0,0,.12);
+        }
+
+        /* Product Title */
+
+        h3{
+
+            color:#0b2c57;
+
+            font-size:24px;
+
+            margin-bottom:15px;
+        }
+
+        /* Details */
+
+        p{
+
+            margin-bottom:10px;
+
+            color:#555;
+
+            line-height:1.6;
+        }
+
+        /* Status Highlight */
+
+        p:first-of-type{
+
+            font-weight:bold;
+        }
+
+        /* Buttons */
+
+        a[href*="complete-order"]{
+
+            display:inline-block;
+
+            background:#16a34a;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-right:10px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="add-review"]{
+
+            display:inline-block;
+
+            background:#2563eb;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-right:10px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="cancel-order"]{
+
+            display:inline-block;
+
+            background:#dc2626;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            margin-top:10px;
+
+            transition:.3s;
+        }
+
+        a[href*="complete-order"]:hover,
+        a[href*="add-review"]:hover,
+        a[href*="cancel-order"]:hover{
+
+            transform:translateY(-2px);
+        }
+
+        /* Empty State */
+
+        body > p:last-child{
+
+            background:white;
+
+            padding:25px;
+
+            text-align:center;
+
+            border-radius:15px;
+
+            color:#666;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.06);
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            nav{
+                line-height:2.2;
+            }
+
+            div[style*="border:1px solid black"]{
+                padding:18px !important;
+            }
+        }
+
+    </style>
+</head>
+</body>
+</html>

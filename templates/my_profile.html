@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Profile – CampusCart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F7F8FA;
+            color: #1A1A2E;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        /* ── Top navbar strip ── */
+        .top-bar {
+            width: 100%;
+            max-width: 620px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeDown 0.5s ease 0.1s forwards;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: #FF6B2B;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .brand-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-name span { color: #FF6B2B; }
+
+        .breadcrumb {
+            font-size: 0.78rem;
+            color: #8A8FA8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb a {
+            color: #8A8FA8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover { color: #FF6B2B; }
+        .breadcrumb-sep { color: #C8CAD4; }
+
+        /* ── Main card ── */
+        .profile-card {
+            width: 100%;
+            max-width: 620px;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #EAECF0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+        }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            to { opacity: 1; }
+        }
+
+        /* ── Cover banner ── */
+        .cover-banner {
+            height: 110px;
+            background: linear-gradient(135deg, #FF6B2B 0%, #FF9A5C 50%, #FFB347 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cover-banner::after {
+            content: '🎓 Campus Marketplace';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Header area below cover ── */
+        .card-header {
+            padding: 0 2rem 1.5rem;
+            position: relative;
+        }
+
+        .avatar-wrap {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-top: -40px;
+            margin-bottom: 0.85rem;
+        }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #FF6B2B;
+            border: 3px solid #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(255,107,43,0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-circle:hover { transform: scale(1.05); }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 22px;
+            height: 22px;
+            background: #16A34A;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+        }
+
+        .header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .profile-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .profile-sub {
+            font-size: 0.8rem;
+            color: #8A8FA8;
+            margin-top: 3px;
+            font-weight: 400;
+        }
+
+        .campus-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #C45A10;
+            background: #FFF0E8;
+            border: 1px solid #FFDCC8;
+            border-radius: 100px;
+            padding: 4px 10px;
+            margin-top: 0.5rem;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            height: 1px;
+            background: #F0F1F5;
+            margin: 0 2rem;
+        }
+
+        /* ── Info section ── */
+        .card-body { padding: 1.5rem 2rem; }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #C0C3D0;
+            margin-bottom: 0.85rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .info-field {
+            background: #F7F8FA;
+            border: 1px solid #EAECF0;
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            position: relative;
+            cursor: default;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .info-field.wide { grid-column: 1 / -1; }
+
+        .info-field:hover {
+            border-color: #FFB88A;
+            box-shadow: 0 0 0 3px rgba(255,107,43,0.07);
+            transform: translateY(-1px);
+        }
+
+        .info-field-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #A0A5BA;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-field-icon { font-size: 12px; }
+
+        .info-field-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1A1A2E;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .copy-pill {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #A0A5BA;
+            background: #EAECF0;
+            border: none;
+            border-radius: 6px;
+            padding: 2px 7px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.15s, background 0.15s, color 0.15s;
+        }
+
+        .info-field:hover .copy-pill { opacity: 1; }
+        .copy-pill:hover { background: #FF6B2B; color: #fff; }
+        .copy-pill.done { background: #16A34A; color: #fff; opacity: 1; }
+
+        /* ── Stats strip ── */
+        .stats-strip {
+            display: flex;
+            border-top: 1px solid #F0F1F5;
+            border-bottom: 1px solid #F0F1F5;
+            margin: 0;
+        }
+
+        .stat-cell {
+            flex: 1;
+            text-align: center;
+            padding: 1rem 0.5rem;
+            border-right: 1px solid #F0F1F5;
+            opacity: 0;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .stat-cell:last-child { border-right: none; }
+
+        .stat-val {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #FF6B2B;
+            line-height: 1;
+        }
+
+        .stat-lbl {
+            font-size: 0.65rem;
+            color: #A0A5BA;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-top: 4px;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* ── Progress bar ── */
+        .progress-wrap {
+            margin: 1.25rem 0 0;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .progress-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6B7080;
+        }
+
+        .progress-pct {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #FF6B2B;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #F0F1F5;
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF6B2B, #FFB347);
+            border-radius: 100px;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* ── Action buttons ── */
+        .card-footer {
+            padding: 1.25rem 2rem 1.75rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 0.72rem 1rem;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: #FF6B2B;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(255,107,43,0.3);
+        }
+
+        .btn-primary:hover {
+            background: #E85A1A;
+            box-shadow: 0 4px 16px rgba(255,107,43,0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-ghost {
+            background: #F7F8FA;
+            color: #6B7080;
+            border: 1px solid #EAECF0;
+        }
+
+        .btn-ghost:hover {
+            background: #EAECF0;
+            color: #1A1A2E;
+            transform: translateY(-1px);
+        }
+
+        /* Ripple */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            transform: scale(0);
+            animation: rpl 0.5s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rpl { to { transform: scale(4); opacity: 0; } }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: #1A1A2E;
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            z-index: 999;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast-dot { width: 7px; height: 7px; background: #16A34A; border-radius: 50%; }
+    </style>
+</head>
+<body>
+
+    <!-- Top nav -->
+    <div class="top-bar">
+        <a href="/home/" class="brand">
+            <div class="brand-icon">🛒</div>
+            <span class="brand-name">Campus<span>Cart</span></span>
+        </a>
+        <div class="breadcrumb">
+            <a href="/home/">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>My Profile</span>
+        </div>
+    </div>
+
+    <!-- Profile card -->
+    <div class="profile-card" id="profileCard">
+
+        <!-- Cover -->
+        <div class="cover-banner"></div>
+
+        <!-- Header -->
+        <div class="card-header">
+            <div class="avatar-wrap">
+                <div class="avatar-circle" id="avatarEl">V</div>
+                <div class="verified-badge">✓</div>
+            </div>
+            <div class="header-row">
+                <div>
+                    <div class="profile-name" id="profileNameEl">{{ request.user.first_name }}</div>
+                    <div class="profile-sub">Student Member</div>
+                </div>
+                <div class="campus-tag">
+                    🎓 <span id="collegeTagEl">{{ profile.college }}</span>
+                </div>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-top">
+                    <span class="progress-label">Profile completeness</span>
+                    <span class="progress-pct" id="pctEl">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="stats-strip">
+            <div class="stat-cell" style="animation-delay:0.4s">
+                <div class="stat-val" id="counterListings">0</div>
+                <div class="stat-lbl">Listings</div>
+            </div>
+            <div class="stat-cell" style="animation-delay:0.5s">
+                <div class="stat-val" id="counterOrders">0</div>
+                <div class="stat-lbl">Orders</div>
+            </div>
+            <div class="stat-cell" style="animation-delay:0.6s">
+                <div class="stat-val">4.8 ★</div>
+                <div class="stat-lbl">Rating</div>
+            </div>
+            <div class="stat-cell" style="animation-delay:0.7s">
+                <div class="stat-val">Verified</div>
+                <div class="stat-lbl">Status</div>
+            </div>
+        </div>
+
+        <!-- Info body -->
+        <div class="card-body">
+            <div class="section-label">Account Details</div>
+            <div class="info-grid">
+
+                <div class="info-field" style="animation-delay:0.3s">
+                    <button class="copy-pill" onclick="copyVal(this, '{{ request.user.first_name }}')">Copy</button>
+                    <div class="info-field-label"><span class="info-field-icon">👤</span> Full Name</div>
+                    <div class="info-field-value">{{ request.user.first_name }}</div>
+                </div>
+
+                <div class="info-field" style="animation-delay:0.35s">
+                    <button class="copy-pill" onclick="copyVal(this, '{{ request.user.email }}')">Copy</button>
+                    <div class="info-field-label"><span class="info-field-icon">✉️</span> Email</div>
+                    <div class="info-field-value">{{ request.user.email }}</div>
+                </div>
+
+                <div class="info-field" style="animation-delay:0.4s">
+                    <button class="copy-pill" onclick="copyVal(this, '{{ profile.phone }}')">Copy</button>
+                    <div class="info-field-label"><span class="info-field-icon">📞</span> Phone</div>
+                    <div class="info-field-value">{{ profile.phone }}</div>
+                </div>
+
+                <div class="info-field" style="animation-delay:0.45s">
+                    <button class="copy-pill" onclick="copyVal(this, '{{ profile.upi_id }}')">Copy</button>
+                    <div class="info-field-label"><span class="info-field-icon">💳</span> UPI ID</div>
+                    <div class="info-field-value">{{ profile.upi_id }}</div>
+                </div>
+
+                <div class="info-field wide" style="animation-delay:0.5s">
+                    <button class="copy-pill" onclick="copyVal(this, '{{ profile.college }}')">Copy</button>
+                    <div class="info-field-label"><span class="info-field-icon">🎓</span> College / Institution</div>
+                    <div class="info-field-value">{{ profile.college }}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Actions -->
+        <div class="card-footer">
+            <a href="/edit-profile/" class="btn btn-primary" id="editBtn">
+                ✏️ Edit Profile
+            </a>
+            <a href="/home/" class="btn btn-ghost" id="homeBtn">
+                ← Back to Home
+            </a>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"><span class="toast-dot"></span><span id="toastMsg">Copied!</span></div>
+
+    <script>
+        /* Avatar initials */
+        (function() {
+            var nameEl = document.getElementById('profileNameEl');
+            var avatarEl = document.getElementById('avatarEl');
+            var name = nameEl ? nameEl.textContent.trim() : '';
+            if (name && !name.includes('{')) {
+                var parts = name.split(' ');
+                avatarEl.textContent = parts.map(function(p){ return p[0]; }).join('').slice(0,2).toUpperCase();
+            }
+        })();
+
+        /* Truncate college tag */
+        (function() {
+            var el = document.getElementById('collegeTagEl');
+            if (el) {
+                var txt = el.textContent.trim();
+                if (txt.length > 20) el.textContent = txt.slice(0, 18) + '…';
+            }
+        })();
+
+        /* Stagger info fields */
+        document.querySelectorAll('.info-field').forEach(function(el) {
+            var delay = parseFloat(el.style.animationDelay || '0') * 1000;
+            setTimeout(function() {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+                el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            }, 200 + delay);
+        });
+
+        /* Progress bar */
+        setTimeout(function() {
+            var fill = document.getElementById('progressFill');
+            var pct = document.getElementById('pctEl');
+            var target = 100;
+            fill.style.width = target + '%';
+            var current = 0;
+            var timer = setInterval(function() {
+                current = Math.min(current + 2, target);
+                pct.textContent = current + '%';
+                if (current >= target) clearInterval(timer);
+            }, 20);
+        }, 600);
+
+        /* Counter animations */
+        function animCount(id, target, delay) {
+            setTimeout(function() {
+                var el = document.getElementById(id);
+                var current = 0;
+                var inc = Math.max(1, Math.ceil(target / 30));
+                var timer = setInterval(function() {
+                    current = Math.min(current + inc, target);
+                    el.textContent = current;
+                    if (current >= target) clearInterval(timer);
+                }, 40);
+            }, delay);
+        }
+        animCount('counterListings', 12, 500);
+        animCount('counterOrders', 8, 650);
+
+        /* Copy to clipboard */
+        function copyVal(btn, text) {
+            if (!text || text.indexOf('{') !== -1) return;
+            navigator.clipboard.writeText(text).then(function() {
+                var orig = btn.textContent;
+                btn.textContent = '✓ Done';
+                btn.classList.add('done');
+                showToast('Copied to clipboard');
+                setTimeout(function() {
+                    btn.textContent = orig;
+                    btn.classList.remove('done');
+                }, 2000);
+            });
+        }
+
+        /* Toast */
+        var toastTimer;
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
+        }
+
+        /* Ripple on buttons */
+        document.querySelectorAll('.btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                var r = document.createElement('span');
+                r.className = 'ripple';
+                var rect = btn.getBoundingClientRect();
+                var sz = Math.max(rect.width, rect.height);
+                r.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px;';
+                btn.appendChild(r);
+                setTimeout(function(){ r.remove(); }, 550);
+            });
+        });
+    </script>
+</body>
+</html>

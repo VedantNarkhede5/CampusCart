@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #F7F8FA;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        /* ── Top bar ── */
+        .top-bar {
+            width: 100%;
+            max-width: 680px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.4rem;
+            animation: fadeDown 0.45s ease forwards;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 32px; height: 32px;
+            background: #FF6B2B;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+        }
+
+        .brand-name {
+            font-size: 1.05rem; font-weight: 700; color: #1A1A2E;
+        }
+
+        .brand-name span { color: #FF6B2B; }
+
+        .breadcrumb {
+            font-size: 0.78rem; color: #8A8FA8;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        .breadcrumb a { color: #8A8FA8; text-decoration: none; transition: color 0.2s; }
+        .breadcrumb a:hover { color: #FF6B2B; }
+        .breadcrumb-sep { color: #C8CAD0; }
+
+        /* ── Card wrapper ── */
+        .card {
+            width: 100%;
+            max-width: 680px;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #EAECF0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06);
+            overflow: hidden;
+            animation: slideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* ── Card top strip ── */
+        .card-strip {
+            height: 6px;
+            background: linear-gradient(90deg, #FF6B2B, #FFB347);
+        }
+
+        /* ── Card header ── */
+        .card-header {
+            padding: 1.75rem 2.25rem 1.25rem;
+            border-bottom: 1px solid #F0F1F5;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: #FFF0E8;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: -0.3px;
+        }
+
+        .header-text p {
+            font-size: 0.78rem;
+            color: #8A8FA8;
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        /* ── Form body ── */
+        form {
+            padding: 1.75rem 2.25rem 1.5rem;
+        }
+
+        /* Django renders each field in a <p> tag */
+        form > p {
+            margin-bottom: 1.1rem;
+        }
+
+        form label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #6B7080;
+            margin-bottom: 6px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #EAECF0;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A2E;
+            background: #FAFBFC;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        form input:hover,
+        form textarea:hover,
+        form select:hover {
+            border-color: #C8CAD4;
+            background: #fff;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #FF6B2B;
+            box-shadow: 0 0 0 3px rgba(255, 107, 43, 0.1);
+            background: #fff;
+        }
+
+        form textarea {
+            min-height: 110px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        form select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8FA8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            padding: 9px 12px;
+            background: #F7F8FA;
+            border-style: dashed;
+            cursor: pointer;
+            font-size: 0.82rem;
+            color: #6B7080;
+        }
+
+        input[type="file"]:hover {
+            border-color: #FF6B2B;
+            background: #FFF8F5;
+        }
+
+        /* error text from Django */
+        form ul.errorlist {
+            list-style: none;
+            margin-top: 5px;
+        }
+
+        form ul.errorlist li {
+            font-size: 0.75rem;
+            color: #D93025;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        form ul.errorlist li::before { content: '⚠'; }
+
+        /* helptext */
+        form .helptext,
+        form span.helptext {
+            display: block;
+            font-size: 0.72rem;
+            color: #A0A5BA;
+            margin-top: 4px;
+        }
+
+        /* ── Divider ── */
+        .form-divider {
+            height: 1px;
+            background: #F0F1F5;
+            margin: 0.5rem 0 1.25rem;
+        }
+
+        /* ── Submit button ── */
+        .btn-submit {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: #FF6B2B;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(255, 107, 43, 0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background: #E85A1A;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(255, 107, 43, 0.38);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(255, 107, 43, 0.2);
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            background: #FFAB85;
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn-submit.loading .spinner { display: block; }
+        .btn-submit.loading .btn-label { opacity: 0.7; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Ripple */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: scale(0);
+            animation: rpl 0.55s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rpl { to { transform: scale(4); opacity: 0; } }
+
+        /* ── Card footer ── */
+        .card-footer {
+            padding: 1rem 2.25rem 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .back-link {
+            font-size: 0.82rem;
+            color: #8A8FA8;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: #FF6B2B; }
+
+        /* ── Field focus indicator ── */
+        .field-wrap {
+            position: relative;
+        }
+
+        .field-indicator {
+            position: absolute;
+            left: 0; top: 50%; transform: translateY(-50%);
+            width: 3px; height: 0;
+            background: #FF6B2B;
+            border-radius: 0 3px 3px 0;
+            transition: height 0.2s ease;
+            pointer-events: none;
+        }
+
+        /* ── Progress bar ── */
+        .fill-progress {
+            padding: 0 2.25rem 1rem;
+        }
+
+        .fill-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .fill-label { font-size: 0.72rem; color: #A0A5BA; font-weight: 500; }
+        .fill-pct   { font-size: 0.72rem; color: #FF6B2B; font-weight: 700; }
+
+        .fill-track {
+            height: 5px; background: #F0F1F5; border-radius: 100px; overflow: hidden;
+        }
+
+        .fill-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF6B2B, #FFB347);
+            border-radius: 100px;
+            transition: width 0.4s ease;
+        }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem; left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: #1A1A2E; color: #fff;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.8rem; font-weight: 500;
+            white-space: nowrap;
+            z-index: 999;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast-dot { width: 7px; height: 7px; background: #16A34A; border-radius: 50%; flex-shrink: 0; }
+
+        /* ── Animations ── */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            body { padding: 1rem 0.75rem; }
+            .card-header, form, .card-footer, .fill-progress { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top nav -->
+    <div class="top-bar">
+        <a href="/home/" class="brand">
+            <div class="brand-icon">🛒</div>
+            <span class="brand-name">Campus<span>Cart</span></span>
+        </a>
+        <div class="breadcrumb">
+            <a href="/home/">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>Edit</span>
+        </div>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+
+        <div class="card-strip"></div>
+
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">✏️</div>
+            <div class="header-text">
+                <h1>Edit Profile</h1>
+                <p>Update your CampusCart account details</p>
+            </div>
+        </div>
+
+        <!-- Fill progress -->
+        <div class="fill-progress">
+            <div class="fill-top">
+                <span class="fill-label">Form progress</span>
+                <span class="fill-pct" id="fillPct">0%</span>
+            </div>
+            <div class="fill-track">
+                <div class="fill-bar" id="fillBar"></div>
+            </div>
+        </div>
+
+        <!-- Django form — unchanged -->
+        <form method="POST" enctype="multipart/form-data" id="editForm">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-divider"></div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <div class="spinner"></div>
+                <span class="btn-label">💾 Save Changes</span>
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="toast" id="toast">
+        <span class="toast-dot"></span>
+        <span id="toastMsg">Saved!</span>
+    </div>
+
+    <script>
+        /* ── Focus scale (keep original behaviour, enhanced) ── */
+        var allFields = document.querySelectorAll('input, textarea, select');
+
+        allFields.forEach(function(field) {
+            field.addEventListener('focus', function() {
+                field.style.transform = 'scale(1.005)';
+            });
+            field.addEventListener('blur', function() {
+                field.style.transform = 'scale(1)';
+                updateProgress();
+            });
+            field.addEventListener('input', updateProgress);
+            field.addEventListener('change', updateProgress);
+        });
+
+        /* ── Fill progress ── */
+        function updateProgress() {
+            var fields = document.querySelectorAll('input:not([type="hidden"]):not([type="submit"]), textarea, select');
+            var filled = 0;
+            fields.forEach(function(f) {
+                if (f.value && f.value.trim() !== '') filled++;
+            });
+            var pct = fields.length > 0 ? Math.round((filled / fields.length) * 100) : 0;
+            document.getElementById('fillBar').style.width = pct + '%';
+            document.getElementById('fillPct').textContent = pct + '%';
+        }
+
+        updateProgress();
+
+        /* ── Submit loading state + ripple ── */
+        var submitBtn = document.getElementById('submitBtn');
+
+        submitBtn.addEventListener('click', function(e) {
+            /* Ripple */
+            var r = document.createElement('span');
+            r.className = 'ripple';
+            var rect = submitBtn.getBoundingClientRect();
+            var sz = Math.max(rect.width, rect.height);
+            r.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px;';
+            submitBtn.appendChild(r);
+            setTimeout(function(){ r.remove(); }, 600);
+
+            /* Loading state — let Django form submit naturally */
+            setTimeout(function() {
+                submitBtn.classList.add('loading');
+                document.querySelector('.btn-label').textContent = 'Saving…';
+            }, 50);
+        });
+
+        /* ── Label float animation ── */
+        document.querySelectorAll('form p').forEach(function(p) {
+            var input = p.querySelector('input, textarea, select');
+            var label = p.querySelector('label');
+            if (!input || !label) return;
+
+            input.addEventListener('focus', function() {
+                label.style.color = '#FF6B2B';
+                label.style.transition = 'color 0.2s';
+            });
+
+            input.addEventListener('blur', function() {
+                label.style.color = '';
+            });
+        });
+
+        /* ── Toast on Django success message (if any) ── */
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('saved') === '1') {
+            showToast('Profile saved successfully!');
+        }
+
+        var toastTimer;
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f4f0e6;
+            padding:30px;
+        }
+
+        .signup-container{
+            width:700px;
+            max-width:95%;
+            background:#fff;
+            padding:50px;
+            border-radius:25px;
+            box-shadow:0 20px 40px rgba(0,0,0,0.12);
+            animation:fadeIn 0.8s ease;
+        }
+
+        h1{
+            text-align:center;
+            color:#111;
+            font-size:42px;
+            margin-bottom:12px;
+            font-weight:700;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#777;
+            margin-bottom:35px;
+            font-size:16px;
+        }
+
+        form p{
+            margin-bottom:18px;
+        }
+
+        form label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:600;
+            color:#333;
+        }
+
+        form input,
+        form select,
+        form textarea{
+            width:100%;
+            padding:15px;
+            border:1px solid #ddd;
+            border-radius:12px;
+            font-size:15px;
+            transition:all 0.3s ease;
+            background:#fafafa;
+        }
+
+        form input:focus,
+        form select:focus,
+        form textarea:focus{
+            outline:none;
+            border-color:#f5c400;
+            box-shadow:0 0 12px rgba(245,196,0,0.25);
+            background:white;
+        }
+
+        textarea{
+            min-height:100px;
+            resize:vertical;
+        }
+
+        button{
+            width:100%;
+            padding:16px;
+            margin-top:15px;
+            border:none;
+            border-radius:12px;
+            background:#f5c400;
+            color:#111;
+            font-size:16px;
+            font-weight:700;
+            cursor:pointer;
+            transition:all 0.3s ease;
+        }
+
+        button:hover{
+            background:#e8b800;
+            transform:translateY(-2px);
+        }
+
+        .back-home{
+            text-align:center;
+            margin-top:25px;
+        }
+
+        .back-home a{
+            text-decoration:none;
+            color:#111;
+            font-weight:700;
+        }
+
+        .back-home a:hover{
+            text-decoration:underline;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(25px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        /* Better spacing for Django form fields */
+
+        form ul{
+            list-style:none;
+            margin-top:5px;
+        }
+
+        .helptext{
+            display:block;
+            color:#777;
+            font-size:13px;
+            margin-top:5px;
+        }
+
+        .errorlist{
+            color:#e53935;
+            list-style:none;
+            margin-top:5px;
+            font-size:14px;
+        }
+
+        /* Mobile */
+
+        @media(max-width:768px){
+
+            .signup-container{
+                padding:35px 25px;
+            }
+
+            h1{
+                font-size:32px;
+            }
+
+            .subtitle{
+                font-size:14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-container">
+
+        <h1>CampusCart</h1>
+
+        <p class="subtitle">
+            Create your student account
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if error %}
+                <p style="color:red;">
+                    {{ error }}
+                </p>
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Create Account
+            </button>
+        </form>
+
+        <div class="back-home">
+            <a href="/">← Back to Home</a>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll("input, select, textarea").forEach(field => {
+
+            field.addEventListener("focus", function(){
+                this.style.transform = "translateY(-2px)";
+            });
+
+            field.addEventListener("blur", function(){
+                this.style.transform = "translateY(0)";
+            });
+
+        });
+
+        const button = document.querySelector("button");
+
+        button.addEventListener("mouseenter", function(){
+            this.style.boxShadow = "0 10px 20px rgba(0,0,0,0.12)";
+        });
+
+        button.addEventListener("mouseleave", function(){
+            this.style.boxShadow = "none";
+        });
+    </script>
+
+</body>
+</html>

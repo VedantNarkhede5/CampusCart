@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Cart</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:25px;
+        }
+
+        /* Header */
+
+        h1:first-of-type{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:25px;
+
+            text-align:center;
+
+            border-radius:20px 20px 0 0;
+        }
+
+        h1:nth-of-type(2){
+
+            background:#0b2c57;
+
+            color:#ffb703;
+
+            text-align:center;
+
+            padding:15px;
+
+            border-radius:0 0 20px 20px;
+
+            margin-bottom:25px;
+        }
+
+        /* Navigation */
+
+        nav{
+
+            background:white;
+
+            padding:18px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#0b2c57;
+
+            font-weight:600;
+
+            margin-right:15px;
+
+            transition:.3s;
+        }
+
+        nav a:hover{
+            color:#ffb703;
+        }
+
+        hr{
+            display:none;
+        }
+
+        /* Cart Items */
+
+        div[style*="border:1px solid black"]{
+
+            background:white !important;
+
+            border:none !important;
+
+            border-radius:18px;
+
+            padding:20px !important;
+
+            margin:20px 0 !important;
+
+            box-shadow:
+            0 8px 25px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        div[style*="border:1px solid black"]:hover{
+
+            transform:translateY(-5px);
+
+            box-shadow:
+            0 15px 35px rgba(0,0,0,.12);
+        }
+
+        /* Product Title */
+
+        h3{
+
+            color:#0b2c57;
+
+            font-size:22px;
+
+            margin-bottom:10px;
+        }
+
+        /* Price */
+
+        div p{
+
+            color:#16a34a;
+
+            font-size:20px;
+
+            font-weight:bold;
+
+            margin-bottom:15px;
+        }
+
+        /* Remove Button */
+
+        a[href*="remove-from-cart"]{
+
+            display:inline-block;
+
+            background:#dc2626;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            transition:.3s;
+        }
+
+        a[href*="remove-from-cart"]:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+            0 8px 20px rgba(220,38,38,.3);
+        }
+
+        /* Checkout Button */
+
+        a[href*="checkout"]{
+
+            display:block;
+
+            width:320px;
+
+            max-width:100%;
+
+            margin:30px auto;
+
+            text-align:center;
+
+            background:
+            linear-gradient(
+                135deg,
+                #16a34a,
+                #15803d
+            );
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:18px;
+
+            border-radius:12px;
+
+            font-size:18px;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        a[href*="checkout"]:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+            0 10px 25px rgba(0,0,0,.15);
+        }
+
+        /* Empty Cart */
+
+        body > p{
+
+            background:white;
+
+            padding:25px;
+
+            text-align:center;
+
+            border-radius:15px;
+
+            color:#666;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.06);
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            nav{
+                line-height:2.2;
+            }
+
+            h1:first-of-type{
+                font-size:30px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>My Cart</h1>
+<h1>CampusCart</h1>
+
+<nav>
+    <a href="/home/">Home</a> |
+    <a href="/add-product/">Add Product</a> |
+    <a href="/cart/">Cart</a> |
+    <a href="/my-orders/">My Orders</a> |
+    <a href="/seller-dashboard/">Seller Dashboard</a>
+    <a href="/logout/">Logout</a>
+    <a href="/notifications/">Notifications</a>
+</nav>
+
+<hr>
+
+{% if cart_items %}
+
+    {% for item in cart_items %}
+
+    <div style="border:1px solid black;padding:10px;margin:10px;">
+
+        <h3>{{ item.product.title }}</h3>
+
+        <p>₹{{ item.product.price }}</p>
+
+        <a href="/remove-from-cart/{{ item.id }}/">
+            Remove
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+    <hr>
+
+    <a href="/checkout/">
+        Proceed to Checkout
+    </a>
+
+{% else %}
+
+    <p>Cart is empty.</p>
+
+{% endif %}
+
+<script>
+
+<hr>
+
+<a href="/checkout/">
+    Proceed to Checkout
+</a>
+<script>
+
+document.querySelectorAll(
+'div[style*="border:1px solid black"]'
+).forEach((card,index)=>{
+
+    card.style.opacity='0';
+    card.style.transform='translateY(20px)';
+
+    setTimeout(()=>{
+
+        card.style.transition='0.5s';
+
+        card.style.opacity='1';
+        card.style.transform='translateY(0)';
+
+    },index*120);
+
+});
+
+</script>
+</body>
+</html>

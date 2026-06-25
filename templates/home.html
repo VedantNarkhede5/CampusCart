@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CampusCart Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+/* ─── Reset ─────────────────────────────────── */
+*, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+}
+
+/* ─── Tokens ─────────────────────────────────── */
+:root {
+    --yellow:      #F5C400;
+    --yellow-lt:   #FFF8D6;
+    --yellow-dk:   #C99B00;
+    --white:       #FFFFFF;
+    --off-white:   #FAFAF8;
+    --ink:         #1A1A1A;
+    --ink-mid:     #555555;
+    --ink-soft:    #999999;
+    --border:      rgba(0,0,0,0.09);
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-hover:0 14px 36px rgba(0,0,0,0.12);
+}
+
+/* ─── Base ───────────────────────────────────── */
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--ink);
+    min-height: 100vh;
+}
+
+
+hr { display: none; }
+
+/* ─── NAVBAR ─────────────────────────────────── */
+nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 56px;
+}
+
+.cc-logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.cc-logo-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--yellow);
+    display: inline-block;
+}
+
+.cc-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    padding: 6px 11px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+nav a:hover {
+    background: var(--yellow-lt);
+    color: var(--ink);
+}
+
+/* ─── WELCOME STRIP ──────────────────────────── */
+.cc-welcome {
+    background: var(--yellow);
+    padding: 10px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ─── HERO BANNER ────────────────────────────── */
+/* ─── HERO SECTION WITH IMAGE ───────────────── */
+
+.cc-hero {
+    position: relative;
+    min-height: 550px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.55),
+            rgba(0,0,0,0.55)
+        ),
+        url("/static/images/image.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 80px 50px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.cc-hero-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -2px;
+    margin-bottom: 10px;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.4);
+}
+
+.cc-hero-title span {
+    color: #F5C400;
+}
+
+.cc-hero-tagline {
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.cc-hero-sub {
+    max-width: 700px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 30px;
+}
+
+/* Search Bar */
+
+.cc-search {
+    display: flex;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cc-search input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 16px 20px;
+    font-size: 15px;
+}
+
+.cc-search button[type="submit"] {
+    border: none;
+    background: #F5C400;
+    color: #1A1A1A;
+    font-weight: 700;
+    padding: 16px 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cc-search button[type="submit"]:hover {
+    background: #ddb100;
+}
+
+/* Mobile Responsive */
+
+@media (max-width:768px){
+
+    .cc-hero{
+        min-height:450px;
+        padding:40px 20px;
+    }
+
+    .cc-hero-title{
+        font-size:48px;
+    }
+
+    .cc-hero-tagline{
+        font-size:20px;
+    }
+
+    .cc-hero-sub{
+        font-size:14px;
+    }
+
+    .cc-search{
+        max-width:100%;
+    }
+}
+
+/* ─── CATEGORY PILLS ─────────────────────────── */
+.cc-cats {
+    padding: 20px 28px 0;
+}
+
+.cc-cats-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+}
+
+.cc-cat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+a[href*="category"],
+a[href="/home/"] {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    background: var(--white);
+    color: var(--ink-mid);
+    padding: 7px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+a[href*="category"]:hover,
+a[href="/home/"]:hover {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--ink);
+}
+
+/* ─── SECTION HEADING ────────────────────────── */
+h2 {
+    padding: 28px 28px 14px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+}
+
+/* ─── PRODUCT GRID ───────────────────────────── */
+.cc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    padding: 0 28px 48px;
+}
+
+/* ─── PRODUCT CARDS ──────────────────────────── */
+div[style*="border:1px solid black"] {
+    background: var(--white) !important;
+    border: none !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 18px !important;
+    margin: 0 !important;
+    box-shadow: var(--shadow-card) !important;
+    transition: transform 0.22s, box-shadow 0.22s !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+div[style*="border:1px solid black"]:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-hover) !important;
+}
+
+div[style*="border:1px solid black"] h3 {
+    margin-bottom: 4px !important;
+}
+
+div[style*="border:1px solid black"] h3 a {
+    text-decoration: none !important;
+    color: var(--ink) !important;
+    font-family: 'Bricolage Grotesque', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    transition: color 0.15s !important;
+}
+
+div[style*="border:1px solid black"] h3 a:hover {
+    color: var(--yellow-dk) !important;
+}
+
+div[style*="border:1px solid black"] p {
+    margin: 3px 0 !important;
+    color: var(--ink-mid) !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+}
+
+/* Urgent / Sold badge row */
+div[style*="border:1px solid black"] h3:nth-of-type(2) {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--ink-mid) !important;
+    min-height: 0 !important;
+}
+
+/* "Your Listing" strong */
+strong {
+    color: #C0392B !important;
+    background: #FDECEA !important;
+    padding: 2px 8px !important;
+    border-radius: 5px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+/* Product images */
+img {
+    margin-top: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 160px !important;
+    object-fit: cover !important;
+    border-radius: var(--radius-md) !important;
+    display: block !important;
+    transition: transform 0.3s !important;
+}
+
+img:hover {
+    transform: scale(1.03) !important;
+}
+
+/* Empty state */
+.cc-grid > p {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+    .cc-hero-title { font-size: 36px; }
+    .cc-hero { padding: 28px 16px 24px; }
+    .cc-grid { grid-template-columns: 1fr; padding: 0 16px 32px; }
+    nav { padding: 0 16px; }
+    h2 { padding: 20px 16px 10px; }
+    .cc-cats { padding: 14px 16px 0; }
+    .cc-welcome { padding: 10px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────── -->
+<nav>
+    <span class="cc-logo"><span class="cc-logo-dot"></span>CampusCart</span>
+    <div class="cc-nav-links">
+        <a href="/home/">Home</a>
+        <a href="/add-product/">+ Add Product</a>
+        <a href="/cart/">Cart</a>
+        <a href="/my-orders/">My Orders</a>
+        <a href="/seller-dashboard/">Seller Dashboard</a>
+        <a href="/edit-profile/">Edit Profile</a>
+        <a href="/notifications/">Notifications</a>
+        <a href="/logout/" style="color:#C0392B;">Logout</a>
+    </div>
+</nav>
+
+<!-- ── WELCOME STRIP ───────────────────────────── -->
+<div class="cc-welcome">
+    👋 Welcome back, {{ request.user.first_name }}!
+</div>
+
+<!-- ── HERO BANNER ─────────────────────────────── -->
+<div class="cc-hero">
+    <div class="cc-hero-title">Campus<span>Cart</span></div>
+    <div class="cc-hero-tagline">Buy &amp; Sell College Items Easily</div>
+    <div class="cc-hero-sub">CampusCart is a student marketplace where you can buy, sell and exchange books, electronics, notes, stationery and other college essentials securely within your campus community.</div>
+
+    <form method="GET" class="cc-search">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search products…"
+        >
+        <button type="submit">🔍 Search</button>
+    </form>
+</div>
+
+<!-- ── CATEGORIES ──────────────────────────────── -->
+<div class="cc-cats">
+    <div class="cc-cats-label">Browse by category</div>
+    <div class="cc-cat-pills">
+        <a href="/home/">All</a>
+        <a href="/home/?category=Notes">📝 Notes</a>
+        <a href="/home/?category=Books">📚 Books</a>
+        <a href="/home/?category=Papers">📄 Papers</a>
+        <a href="/home/?category=Stationery">✏️ Stationery</a>
+    </div>
+</div>
+
+<div class="cc-grid">
+<hr>
+
+<h2>Recommended For You</h2>
+
+{% for product in recommended_products %}
+
+<div style="border:1px solid black;padding:10px;margin:10px;">
+
+    <h3>{{ product.title }}</h3>
+
+    <p>
+        Category: {{ product.category }}
+    </p>
+
+    <p>
+        ₹{{ product.price }}
+    </p>
+
+    <a href="/product/{{ product.id }}/">
+        View Product
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No recommendations available.</p>
+
+{% endfor %}
+<hr>
+</div><!-- end .cc-grid -->
+<hr>
+
+
+
+<h2>Available Products</h2>
+
+<!-- ── PRODUCT GRID ────────────────────────────── -->
+<div class="cc-grid">
+
+{% for product in products %}
+
+<div style="border:1px solid black; padding:10px; margin:10px;">
+
+    <h3>
+    <a href="/product/{{ product.id }}/">
+        {{ product.title }}
+    </a>
+    </h3>
+    <h3>
+        {% if product.is_urgent %}
+            ⚡ URGENT
+        {% endif %}
+        {% if product.is_sold %}
+            🔴 SOLD
+        {% endif %}
+    </h3>
+    {% if product.seller == request.user %}
+    <p><strong>Your Listing</strong></p>
+    {% endif %}
+    <p>
+        Category: {{ product.category }}
+    </p>
+
+    <p>
+        Price: ₹{{ product.price }}
+    </p>
+
+    <p>
+        Condition: {{ product.condition }}
+    </p>
+
+    <p>
+        Seller: {{ product.seller.first_name }}
+    </p>
+
+    {% if product.image %}
+        <img
+            src="{{ product.image.url }}"
+            width="200"
+        >
+    {% endif %}
+
+</div>
+
+{% empty %}
+
+<p>No products available.</p>
+
+{% endfor %}
+
+</div><!-- end .cc-grid -->
+
+<script>
+document.querySelectorAll('div[style*="border:1px solid black"]').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-4px)';
+        card.style.boxShadow = '0 14px 36px rgba(0,0,0,0.12)';
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = '0 2px 12px rgba(0,0,0,0.07)';
+    });
+});
+
+// Yellow price badge
+document.querySelectorAll('div[style*="border:1px solid black"] p').forEach(p => {
+    if (p.textContent.includes('Price:')) {
+        p.innerHTML = p.innerHTML.replace(
+            /(₹[\d,]+)/,
+            '<span style="background:#F5C400;padding:2px 9px;border-radius:6px;color:#1A1A1A;font-weight:700;font-size:15px;font-family:\'Bricolage Grotesque\',sans-serif">$1</span>'
+        );
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.title }}</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:25px;
+        }
+
+        /* CampusCart Title */
+
+        body > h1:first-of-type{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:25px;
+
+            border-radius:20px;
+
+            margin-bottom:20px;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.15);
+        }
+
+        /* Navbar */
+
+        nav{
+
+            background:white;
+
+            padding:18px;
+
+            border-radius:15px;
+
+            margin-bottom:25px;
+
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#0b2c57;
+
+            font-weight:600;
+
+            margin-right:15px;
+
+            transition:.3s;
+        }
+
+        nav a:hover{
+            color:#ffb703;
+        }
+
+        hr{
+            display:none;
+        }
+
+        /* Product Card */
+
+        body > h1:nth-of-type(2){
+
+            background:white;
+
+            padding:25px 25px 10px;
+
+            border-radius:20px 20px 0 0;
+
+            color:#0b2c57;
+
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+            margin-top:15px;
+        }
+
+        /* Product Image */
+
+        img{
+
+            display:block;
+
+            max-width:500px;
+
+            width:100%;
+
+            border-radius:15px;
+
+            margin:20px auto;
+
+            box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+            transition:.4s;
+        }
+
+        img:hover{
+
+            transform:scale(1.03);
+        }
+
+        /* Product Details */
+
+        p{
+
+            background:white;
+
+            padding:15px 25px;
+
+            color:#555;
+
+            font-size:17px;
+
+            border-bottom:1px solid #eee;
+        }
+
+        p:last-of-type{
+
+            border-radius:0 0 20px 20px;
+
+            margin-bottom:25px;
+        }
+
+        /* Seller Link */
+
+        p a{
+
+            text-decoration:none;
+
+            color:#2563eb;
+
+            font-weight:600;
+        }
+
+        p a:hover{
+            text-decoration:underline;
+        }
+
+        /* Urgent */
+
+        h3{
+
+            background:#fff3cd;
+
+            color:#856404;
+
+            padding:15px;
+
+            border-radius:12px;
+
+            margin:15px 0;
+        }
+
+        /* Sold */
+
+        h2{
+
+            background:#ffe5e5;
+
+            color:#dc2626;
+
+            padding:15px;
+
+            border-radius:12px;
+
+            margin:15px 0;
+        }
+
+        /* Action Buttons */
+
+        a[href*="add-to-cart"]{
+
+            display:inline-block;
+
+            background:#0b2c57;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:14px 28px;
+
+            border-radius:10px;
+
+            margin-right:10px;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        a[href*="buy-now"]{
+
+            display:inline-block;
+
+            background:#16a34a;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:14px 28px;
+
+            border-radius:10px;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        a[href*="add-to-cart"]:hover,
+        a[href*="buy-now"]:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:0 10px 20px rgba(0,0,0,.15);
+        }
+
+        /* Your Listing Button */
+
+        button{
+
+            background:#999;
+
+            color:white;
+
+            border:none;
+
+            padding:14px 25px;
+
+            border-radius:10px;
+
+            font-size:16px;
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            img{
+                max-width:100%;
+            }
+
+            nav{
+                line-height:2.2;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>CampusCart</h1>
+
+<nav>
+    <a href="/home/">Home</a> |
+    <a href="/add-product/">Add Product</a> |
+    <a href="/cart/">Cart</a> |
+    <a href="/my-orders/">My Orders</a> |
+    <a href="/seller-dashboard/">Seller Dashboard</a>
+    <a href="/logout/">Logout</a>
+    <a href="/notifications/">Notifications</a>
+</nav>
+
+<hr>
+
+<h1>{{ product.title }}</h1>
+{% if product.is_urgent %}
+    <h3>⚡ URGENT SALE</h3>
+{% endif %}
+{% if product.is_sold %}
+    <h2>🔴 SOLD</h2>
+{% endif %}
+
+{% if product.image %}
+<img src="{{ product.image.url }}" width="300">
+{% endif %}
+
+<p>
+Category: {{ product.category }}
+</p>
+
+<p>
+Condition: {{ product.condition }}
+</p>
+
+<p>
+Price: ₹{{ product.price }}
+</p>
+<p>
+    Seller: {{ product.seller.first_name }}
+
+    {% if average_rating %}
+        ⭐ {{ average_rating|floatformat:1 }}
+    {% else %}
+        ⭐ New Seller
+    {% endif %}
+</p>
+<p>
+    Seller:
+    <a href="/seller-profile/{{ product.seller.id }}/">
+        {{ product.seller.first_name }}
+    </a>
+</p>
+<p>
+{{ product.description }}
+</p>
+
+{% if product.seller == request.user %}
+
+<button disabled>
+    Your Listing
+</button>
+
+{% else %}
+
+{% if not product.is_sold %}
+
+<a href="/add-to-cart/{{ product.id }}/">
+    Add to Cart
+</a>
+
+<a href="/buy-now/{{ product.id }}/">
+    Buy Now
+</a>
+{% else %}
+
+<p>Item Sold</p>
+
+{% endif %}
+
+{% endif %}
+
+
+<p>Total Recommendations: {{ recommendations|length }}</p>
+
+<hr>
+
+<h2>Recommended Products</h2>
+
+{% for item in recommendations %}
+
+<div>
+
+    <p>
+        {{ item.title }}
+    </p>
+
+    <p>
+        ₹{{ item.price }}
+    </p>
+
+    <a href="/product/{{ item.id }}/">
+        View Product
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No recommendations available.</p>
+
+{% endfor %}
+
+<script>
+
+document.querySelectorAll('img').forEach(img=>{
+
+    img.addEventListener('mouseenter',()=>{
+
+        img.style.transform='scale(1.03)';
+    });
+
+    img.addEventListener('mouseleave',()=>{
+
+        img.style.transform='scale(1)';
+    });
+
+});
+
+</script>
+</body>
+</html>

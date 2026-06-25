@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Profile</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+            padding:30px;
+        }
+
+        /* Seller Header */
+
+        .seller-header{
+
+            background:
+            linear-gradient(135deg,#0b2c57,#14417a);
+
+            color:white;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            display:flex;
+            align-items:center;
+            gap:30px;
+
+            box-shadow:
+            0 10px 30px rgba(0,0,0,.15);
+
+            margin-bottom:30px;
+        }
+
+        .avatar{
+
+            width:120px;
+            height:120px;
+
+            border-radius:50%;
+
+            background:white;
+
+            color:#0b2c57;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:50px;
+            font-weight:bold;
+        }
+
+        .seller-info h1{
+            margin-bottom:10px;
+            font-size:42px;
+        }
+
+        .seller-info p{
+            font-size:18px;
+            opacity:.95;
+            margin:5px 0;
+        }
+
+        .rating-card{
+
+            margin-left:auto;
+
+            background:rgba(255,255,255,.15);
+
+            padding:20px 30px;
+
+            border-radius:15px;
+
+            text-align:center;
+        }
+
+        .rating-card h2{
+            font-size:35px;
+            color:#ffb703;
+        }
+
+        /* Section Titles */
+
+        .section-title{
+
+            margin:30px 0 20px;
+
+            color:#0b2c57;
+
+            font-size:30px;
+        }
+
+        /* Product Cards */
+
+        .listing-card{
+
+            background:white;
+
+            padding:20px;
+
+            margin-bottom:15px;
+
+            border-radius:15px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        .listing-card:hover{
+
+            transform:translateY(-5px);
+
+            box-shadow:
+            0 15px 30px rgba(0,0,0,.12);
+        }
+
+        .listing-card h3{
+            color:#0b2c57;
+            margin-bottom:8px;
+        }
+
+        .price{
+            color:#16a34a;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        /* Reviews */
+
+        .review-card{
+
+            background:white;
+
+            padding:20px;
+
+            border-radius:15px;
+
+            margin-bottom:20px;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        .review-card:hover{
+            transform:translateY(-3px);
+        }
+
+        .stars{
+
+            color:#ffb703;
+
+            font-size:20px;
+
+            margin-bottom:10px;
+        }
+
+        .comment{
+
+            color:#555;
+
+            line-height:1.6;
+
+            margin-bottom:10px;
+        }
+
+        .buyer{
+            color:#0b2c57;
+            font-weight:600;
+        }
+
+        .empty{
+
+            background:white;
+
+            padding:20px;
+
+            border-radius:12px;
+
+            color:#666;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.06);
+        }
+
+        @media(max-width:768px){
+
+            .seller-header{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            .rating-card{
+                margin-left:0;
+                margin-top:15px;
+            }
+
+            .seller-info h1{
+                font-size:32px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="seller-header">
+
+        <div class="avatar">
+            {{ seller.first_name|first }}
+        </div>
+
+        <div class="seller-info">
+
+            <h1>{{ seller.first_name }}</h1>
+
+            <p>📧 {{ seller.email }}</p>
+
+            <p>🎓 CampusCart Verified Seller</p>
+
+        </div>
+
+        <div class="rating-card">
+
+            <p>Average Rating</p>
+
+            <h2>⭐ {{ average_rating }}</h2>
+
+        </div>
+
+    </div>
+
+    <h2 class="section-title">
+        Active Listings
+    </h2>
+
+    {% for product in products %}
+
+    <div class="listing-card">
+
+        <h3>
+            {{ product.title }}
+        </h3>
+
+        <div class="price">
+            ₹{{ product.price }}
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty">
+        No active listings.
+    </div>
+
+    {% endfor %}
+
+    <h2 class="section-title">
+        Customer Reviews
+    </h2>
+
+    {% for review in reviews %}
+
+    <div class="review-card">
+
+        <div class="stars">
+            ⭐ {{ review.rating }}/5
+        </div>
+
+        <div class="comment">
+            "{{ review.comment }}"
+        </div>
+
+        <div class="buyer">
+            — {{ review.buyer.first_name }}
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty">
+        No reviews yet.
+    </div>
+
+    {% endfor %}
+
+    <script>
+
+        document.querySelectorAll(
+        '.listing-card,.review-card'
+        ).forEach(card=>{
+
+            card.addEventListener('mouseenter',()=>{
+
+                card.style.transform='translateY(-5px)';
+            });
+
+            card.addEventListener('mouseleave',()=>{
+
+                card.style.transform='translateY(0)';
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
